@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>Sushi Client</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Schermata di Login -->
+  <div *ngIf="!tavolo">
+    <ion-item>
+      <ion-label position="floating">N. Tavolo</ion-label>
+      <ion-input [(ngModel)]="tavoloInput"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tuo Nome</ion-label>
+      <ion-input [(ngModel)]="nomeInput"></ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="login(tavoloInput, nomeInput)">Entra nel Menu</ion-button>
+  </div>
+
+  <!-- Menu Prodotti -->
+  <div *ngIf="tavolo">
+    <h3 style="text-align: center;">Tavolo {{tavolo}} - {{nome}}</h3>
+    <ion-list>
+      <ion-item *ngFor="let p of prodotti">
+        <ion-thumbnail slot="start">
+          <img [src]="p.immagine" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{p.nome}}</h2>
+          <p>{{p.prezzo | currency:'EUR'}}</p>
+        </ion-label>
+        <ion-button slot="end" fill="clear" (click)="ordina(p)">Ordina</ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

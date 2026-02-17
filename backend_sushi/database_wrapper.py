@@ -6,7 +6,6 @@ load_dotenv()
 
 class DatabaseWrapper:
     def __init__(self):
-        # Aiven richiede la porta come intero
         self.config = {
             "host": os.getenv("DB_HOST"),
             "user": os.getenv("DB_USER"),
@@ -31,7 +30,6 @@ class DatabaseWrapper:
         self._execute("CREATE TABLE IF NOT EXISTS categorie (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(50))", fetch=False)
         self._execute("CREATE TABLE IF NOT EXISTS prodotti (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100), prezzo DECIMAL(10,2), immagine TEXT, id_categoria INT)", fetch=False)
         self._execute("CREATE TABLE IF NOT EXISTS ordini (id INT AUTO_INCREMENT PRIMARY KEY, tavolo VARCHAR(10), cliente VARCHAR(50), stato VARCHAR(20) DEFAULT 'in attesa')", fetch=False)
-        
         if not self._execute("SELECT id FROM prodotti"):
             self._execute("INSERT INTO categorie (nome) VALUES ('Sushi')", fetch=False)
             self._execute("INSERT INTO prodotti (nome, prezzo, immagine, id_categoria) VALUES ('Nigiri Salmone', 4.00, 'https://via.placeholder.com/150', 1), ('Uramaki Phil', 8.00, 'https://via.placeholder.com/150', 1)", fetch=False)
